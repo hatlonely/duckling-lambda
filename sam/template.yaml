@@ -1,0 +1,31 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  Duckling SAM Template
+Globals:
+  Function:
+    Timeout: 10
+
+Resources:
+  DucklingFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      PackageType: Image
+      MemorySize: 256
+      # 函数 url
+      FunctionUrlConfig:
+        AuthType: NONE
+      # Api-Gateway
+#      Events:
+#        APIEvent:
+#          Type: HttpApi
+    Metadata:
+      DockerTag: v1
+      DockerContext: ./app
+      Dockerfile: Dockerfile
+
+Outputs:
+  GinApi:
+    Description: "duckling sam template"
+    Value:
+      Fn::GetAtt: HelloWorldFunctionUrl.FunctionUrl
